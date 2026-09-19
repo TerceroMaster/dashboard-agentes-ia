@@ -1,0 +1,12 @@
+streamlit
+pandas
+plotly
+wordcloud
+matplotlib
+numpy
+scikit-learn
+langchain
+langchain-experimental
+langchain-openai
+openai
+openpyxl
