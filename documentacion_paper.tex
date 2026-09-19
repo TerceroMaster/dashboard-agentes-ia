@@ -43,6 +43,34 @@ Los tableros de control (dashboards) tradicionales ofrecen visualizaciones está
 
 El objetivo principal es construir una plataforma SaaS B2B modular que aloje diferentes casos de uso corporativos, donde el principal valor agregado es un botón de chat flotante impulsado por un agente de Inteligencia Artificial capaz de escribir y ejecutar código Python en tiempo real sobre las bases de datos de la empresa.
 
+\section{Arquitectura Global SaaS B2B}
+La plataforma está concebida bajo un modelo de \textit{Multitenancy} (múltiples inquilinos), lo que permite escalar el servicio a un sinfín de empresas centralizando el núcleo cognitivo. A continuación se presenta el diagrama general de la solución:
+
+\vspace{0.5cm}
+\begin{center}
+\makebox[\textwidth][c]{
+\begin{tikzpicture}[node distance=1.5cm and 2cm]
+    % Nodos
+    \node (clientA) [startstop, text width=2cm] {Cliente A (Salud)};
+    \node (clientB) [startstop, text width=2cm, right=1cm of clientA] {Cliente B (Retail)};
+    \node (clientC) [startstop, text width=2cm, right=1cm of clientB] {Cliente C (Logística)};
+    
+    \node (streamlit) [process, below=1.5cm of clientB, text width=4cm] {Portal Central SaaS (Streamlit Cloud)};
+    
+    \node (db) [database, below=1.5cm of streamlit, text width=2cm, text centered] {Bases de Datos Aisladas};
+    
+    \node (ai) [io, right=1.5cm of streamlit, text width=2.5cm] {Capa Cognitiva (OpenAI + LangChain)};
+
+    % Flechas
+    \draw [arrow] (clientA) -- (streamlit);
+    \draw [arrow] (clientB) -- (streamlit);
+    \draw [arrow] (clientC) -- (streamlit);
+    \draw [arrow, <->] (streamlit) -- node[anchor=west] {Consultas Seguras} (db);
+    \draw [arrow, <->] (streamlit) -- node[anchor=south] {Interacción} (ai);
+\end{tikzpicture}
+}
+\end{center}
+
 \section{Metodología y Procesos}
 El desarrollo del proyecto siguió una metodología ágil iterativa:
 \begin{enumerate}
@@ -51,6 +79,31 @@ El desarrollo del proyecto siguió una metodología ágil iterativa:
     \item \textbf{Integración del Agente de IA:} Se orquestó la arquitectura LangChain con OpenAI. Se inyectaron reglas estrictas (system prompts) para controlar el comportamiento del agente, obligándolo a comunicarse en español, generar gráficas con Matplotlib y exportar DataFrames a Excel sin entrar en ciclos infinitos.
     \item \textbf{Pruebas y Depuración:} Manejo de excepciones en la generación de mapas geoespaciales (Plotly) y prevención de errores de dependencias en el entorno de despliegue en la nube (Streamlit Community Cloud).
 \end{enumerate}
+
+\subsection{Pipeline de Datos (ETL) e Integración}
+El siguiente flujo muestra cómo los datos en bruto son refinados y entregados tanto a los dashboards visuales como al Agente de IA para su análisis.
+
+\vspace{0.5cm}
+\begin{center}
+\makebox[\textwidth][c]{
+\begin{tikzpicture}[node distance=1.5cm and 1.5cm]
+    % Nodos
+    \node (raw) [io, text width=2cm] {Datos Crudos (Excel, CSV)};
+    \node (pandas) [process, right=1.5cm of raw, text width=2.5cm] {Limpieza y Normalización (Pandas)};
+    \node (sqlite) [database, right=1.5cm of pandas, text width=2cm, text centered] {Almacenamiento (SQLite)};
+    
+    \node (ui) [process, below=1.5cm of sqlite, text width=3cm] {Visualización Reactiva (Plotly)};
+    \node (agent) [startstop, below=1.5cm of pandas, text width=3cm] {Agente de IA (Análisis Ad-Hoc)};
+
+    % Flechas
+    \draw [arrow] (raw) -- (pandas);
+    \draw [arrow] (pandas) -- node[anchor=south] {Transformación} (sqlite);
+    \draw [arrow] (sqlite) -- node[anchor=west] {Carga Dashboard} (ui);
+    \draw [arrow] (sqlite) |- node[anchor=north east] {Lectura Contextual} (agent);
+    \draw [arrow, <->] (ui) -- node[anchor=north] {Interacción UI} (agent);
+\end{tikzpicture}
+}
+\end{center}
 
 \section{Tecnologías Utilizadas}
 \begin{itemize}
