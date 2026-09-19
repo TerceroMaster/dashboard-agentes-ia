@@ -1,0 +1,133 @@
+\documentclass[12pt,a4paper]{article}
+
+% Paquetes esenciales
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=3cm,bottom=3cm}
+
+% Paquetes para diagramas
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning, fit, backgrounds, calc}
+
+% Estilos TikZ para diagramas
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{database} = [cylinder, shape border rotate=90, draw, minimum height=2cm, minimum width=1.5cm, fill=gray!20]
+
+\title{\textbf{Desarrollo e Implementación de un Portafolio SaaS B2B de Inteligencia de Negocios Aumentado por IA (Arquitectura Multi-Agente)}}
+\author{DataViz Studio / Proyecto PIRMCT}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+El presente documento detalla el desarrollo, la metodología y los resultados de la implementación de una plataforma de Inteligencia de Negocios (BI) como Servicio (SaaS), aumentada por Agentes de Inteligencia Artificial. El proyecto insignia se centra en el análisis de datos del Programa Interinstitucional para la Recolección de Medicamentos Caducados (PIRMCT), pero la arquitectura está diseñada para ser escalable a múltiples industrias (energía, retail, logística). Se implementó una interfaz en Streamlit conectada a un ecosistema Multi-Agente basado en LangChain y el modelo GPT-4o-mini de OpenAI. Este sistema permite al usuario interactuar en lenguaje natural para realizar consultas matemáticas complejas, generar reportes dinámicos (Excel y PDF) y graficar datos en tiempo real de forma autónoma.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Introducción}
+Los tableros de control (dashboards) tradicionales ofrecen visualizaciones estáticas predefinidas, lo cual limita la capacidad de los tomadores de decisiones para realizar exploraciones profundas \textit{ad-hoc} sin depender de un equipo de ingenieros de datos. Este proyecto busca cerrar esa brecha mediante la integración de un "Científico de Datos Autónomo" directamente en la interfaz de usuario. 
+
+El objetivo principal es construir una plataforma SaaS B2B modular que aloje diferentes casos de uso corporativos, donde el principal valor agregado es un botón de chat flotante impulsado por un agente de Inteligencia Artificial capaz de escribir y ejecutar código Python en tiempo real sobre las bases de datos de la empresa.
+
+\section{Metodología y Procesos}
+El desarrollo del proyecto siguió una metodología ágil iterativa:
+\begin{enumerate}
+    \item \textbf{Exploración y ETL:} Extracción, limpieza y carga de las bases de datos locales utilizando \texttt{pandas} y \texttt{sqlite3}. Se procesaron fechas con formatos inconsistentes y se consolidaron los datos del sector salud (PIRMCT).
+    \item \textbf{Desarrollo de la UI:} Se construyó una interfaz corporativa responsiva usando \texttt{Streamlit}, implementando estilos CSS personalizados para lograr un diseño moderno (botón flotante tipo pastilla).
+    \item \textbf{Integración del Agente de IA:} Se orquestó la arquitectura LangChain con OpenAI. Se inyectaron reglas estrictas (system prompts) para controlar el comportamiento del agente, obligándolo a comunicarse en español, generar gráficas con Matplotlib y exportar DataFrames a Excel sin entrar en ciclos infinitos.
+    \item \textbf{Pruebas y Depuración:} Manejo de excepciones en la generación de mapas geoespaciales (Plotly) y prevención de errores de dependencias en el entorno de despliegue en la nube (Streamlit Community Cloud).
+\end{enumerate}
+
+\section{Tecnologías Utilizadas}
+\begin{itemize}
+    \item \textbf{Backend / Lógica:} Python 3.
+    \item \textbf{Frontend:} Streamlit (para la interfaz web responsiva).
+    \item \textbf{Base de Datos:} SQLite (embebida en el archivo \texttt{dashboard\_data.db}).
+    \item \textbf{Inteligencia Artificial:} OpenAI API (Modelo \texttt{gpt-4o-mini}) y LangChain (Framework de orquestación de agentes).
+    \item \textbf{Análisis de Datos:} Pandas y Numpy.
+    \item \textbf{Visualización de Datos:} Plotly Express (para gráficas interactivas nativas) y Matplotlib (para gráficas generadas al vuelo por la IA).
+    \item \textbf{Reporteo:} Openpyxl (para la exportación nativa a Excel).
+\end{itemize}
+
+\newpage
+\section{Arquitectura del Sistema Multi-Agente}
+
+El siguiente diagrama ilustra el flujo de información y la arquitectura del Agente encargado del análisis de datos.
+
+\vspace{1cm}
+\begin{center}
+\begin{tikzpicture}[node distance=2cm]
+    % Nodos
+    \node (user) [startstop] {Usuario (Natural Language)};
+    \node (ui) [process, below of=user] {Interfaz Streamlit (Chat)};
+    \node (langchain) [io, below of=ui] {LangChain Orquestador};
+    
+    \node (llm) [process, right of=langchain, xshift=3cm] {OpenAI (GPT-4o-mini)};
+    \node (python) [process, below of=langchain] {Python REPL (Pandas Tool)};
+    
+    \node (db) [database, left of=python, xshift=-2cm] {SQLite / DataFrame};
+    
+    \node (output) [process, below of=python] {Generación de Artefactos (Excel, PDF, PNG)};
+    \node (response) [startstop, below of=output] {Respuesta al Usuario};
+
+    % Flechas
+    \draw [arrow] (user) -- (ui);
+    \draw [arrow] (ui) -- (langchain);
+    \draw [arrow] (langchain) -- node[anchor=south] {Prompt + Schema} (llm);
+    \draw [arrow] (llm) -- node[anchor=north] {Código Python} (langchain);
+    \draw [arrow] (langchain) -- node[anchor=east] {Ejecuta Script} (python);
+    \draw [arrow] (db) -- node[anchor=south] {Lectura/Escritura} (python);
+    \draw [arrow] (python) -- node[anchor=east] {Retorna Resultados} (langchain);
+    \draw [arrow] (python) -- node[anchor=west] {Guarda Archivo} (output);
+    \draw [arrow] (langchain) edge[bend right=40] node[anchor=east] {Texto Final} (response);
+    \draw [arrow] (output) -- (response);
+\end{tikzpicture}
+\end{center}
+
+\subsection{El Flujo del Agente (Pensamiento -> Acción -> Observación)}
+El Agente opera bajo la metodología ReAct (Reasoning and Acting). Cuando el usuario envía una consulta (ej. \textit{"Exporta a Excel los medicamentos agrupados por mes"}):
+\begin{enumerate}
+    \item \textbf{Pensamiento:} El LLM analiza la base de datos y deduce que necesita aplicar \texttt{groupby} en pandas.
+    \item \textbf{Acción:} Escribe el código Python internamente y llama a la herramienta del entorno.
+    \item \textbf{Observación:} La herramienta ejecuta el código y le devuelve al LLM el \textit{output} de consola.
+    \item \textbf{Respuesta Final:} El LLM interpreta la ejecución exitosa, confirma la creación del archivo e informa al usuario.
+\end{enumerate}
+
+\section{Resultados}
+\begin{itemize}
+    \item \textbf{Despliegue Exitoso:} La plataforma fue migrada con éxito a Streamlit Community Cloud.
+    \item \textbf{Interacción Autónoma:} El sistema logró interpretar preguntas de alta complejidad matemática, graficar topologías de datos que no estaban pre-programadas en el dashboard e interactuar conversacionalmente.
+    \item \textbf{Generación de Artefactos Segura:} Se validó la capacidad del agente para exportar reportes físicos en Excel y PDF sobre la marcha, incluyendo la implementación de algoritmos de \textit{Garbage Collection} para la auto-destrucción de los archivos temporales generados y así evitar saturar la memoria del servidor.
+\end{itemize}
+
+\section{Discusión}
+Durante la integración surgieron diversos retos técnicos. El más crítico fue el manejo de fechas sucias y nulas dentro del modelo de datos de PIRMCT, lo cual causaba que la IA entrara en ciclos infinitos (Agent Max Iterations Exceeded). La solución fue intervenir el \textit{System Prompt} para forzar al modelo a aplicar transformaciones específicas de limpieza (ej. \texttt{.str.split().str.upper()}) antes de operar matemáticamente. 
+
+Asimismo, se resolvió un conflicto nativo de renderizado (Duplicate Element Key) en la UI al implementar un sistema dinámico de IDs en bucle para los botones de descarga de archivos, permitiendo al agente generar múltiples reportes simultáneos en el historial de chat sin colapsar el entorno gráfico.
+
+\section{Conclusión}
+La fusión entre el Business Intelligence estático y los Large Language Models (LLMs) representa una evolución inminente en la analítica de datos. Este proyecto demuestra la viabilidad técnica y operativa de implementar una solución SaaS B2B donde el usuario no necesita conocer lenguajes de consulta de bases de datos para extraer valor instantáneo de sus ecosistemas de información.
+
+\section{Perspectivas a Futuro}
+Las futuras iteraciones de la plataforma apuntan a:
+\begin{enumerate}
+    \item \textbf{Integración SQL Directa:} Transición de \textit{Pandas Dataframe Agent} a \textit{SQL Toolkit Agent} para soportar bases de datos masivas (Terabytes) conectadas directamente a Data Lakes en AWS o Azure sin cargarlas en la memoria RAM del servidor web.
+    \item \textbf{Agentes Multi-Especialistas:} Implementación de una arquitectura de enjambre (Swarm) donde un Agente Orquestador dirija a sub-agentes especializados: un Analista Cuantitativo, un Creador de Reportes y un Crítico de Datos.
+    \item \textbf{Exportación Inteligente de Dashboards:} Permitir que la IA ensamble dashboards enteros y los exporte como documentos PPTX o PDF dinámicos para juntas ejecutivas automatizadas.
+\end{enumerate}
+
+\end{document}
