@@ -289,14 +289,19 @@ with tab2:
         if 'lat' in df_filtered.columns:
             # Aggregate for map
             map_data = df_filtered.groupby('municipio').agg({'cantidad_remanente':'sum', 'lat':'first', 'lon':'first'}).reset_index()
-            fig_map = px.scatter_mapbox(map_data, lat="lat", lon="lon", size="cantidad_remanente", color="municipio",
-                                        hover_name="municipio", hover_data=["cantidad_remanente"],
-                                        color_discrete_sequence=[AZUL_CIELO, AZUL_OSCURO, ROJO, VERDE, "#F39C12"],
-                                        zoom=7, center={"lat": 17.98, "lon": -92.94},
-                                        mapbox_style="open-street-map") # Changed to open-street-map to avoid API key
-            fig_map.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, paper_bgcolor='rgba(0,0,0,0)')
-            st.plotly_chart(fig_map, use_container_width=True)
+            map_data = map_data.dropna(subset=['lat', 'lon', 'cantidad_remanente']) # Prevent Plotly AttributeErrors
             
+            try:
+                fig_map = px.scatter_mapbox(map_data, lat="lat", lon="lon", size="cantidad_remanente", color="municipio",
+                                            hover_name="municipio", hover_data=["cantidad_remanente"],
+                                            color_discrete_sequence=[AZUL_CIELO, AZUL_OSCURO, ROJO, VERDE, "#F39C12"],
+                                            zoom=7, center={"lat": 17.98, "lon": -92.94},
+                                            mapbox_style="open-street-map") # Changed to open-street-map to avoid API key
+                fig_map.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, paper_bgcolor='rgba(0,0,0,0)')
+                st.plotly_chart(fig_map, use_container_width=True)
+            except Exception as e:
+                st.warning(f"No se pudo generar el mapa interactivo. Detalle: {e}")
+                
     with col_top:
         st.markdown("#### Top Municipios Recolectores")
         if 'municipio' in df_filtered.columns:
