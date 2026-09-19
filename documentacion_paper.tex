@@ -21,7 +21,7 @@
 \tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
 \tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
 \tikzstyle{arrow} = [thick,->,>=stealth]
-\tikzstyle{database} = [cylinder, shape border rotate=90, draw, minimum height=2cm, minimum width=1.5cm, fill=gray!20]
+\tikzstyle{database} = [cylinder, shape border rotate=90, draw, minimum height=2cm, minimum width=2.5cm, fill=gray!20]
 
 \title{\textbf{Desarrollo e Implementación de un Portafolio SaaS B2B de Inteligencia de Negocios Aumentado por IA (Arquitectura Multi-Agente)}}
 \author{DataViz Studio / Proyecto PIRMCT}
@@ -34,6 +34,12 @@
 \begin{abstract}
 El presente documento detalla el desarrollo, la metodología y los resultados de la implementación de una plataforma de Inteligencia de Negocios (BI) como Servicio (SaaS), aumentada por Agentes de Inteligencia Artificial. El proyecto insignia se centra en el análisis de datos del Programa Interinstitucional para la Recolección de Medicamentos Caducados (PIRMCT), pero la arquitectura está diseñada para ser escalable a múltiples industrias (energía, retail, logística). Se implementó una interfaz en Streamlit conectada a un ecosistema Multi-Agente basado en LangChain y el modelo GPT-4o-mini de OpenAI. Este sistema permite al usuario interactuar en lenguaje natural para realizar consultas matemáticas complejas, generar reportes dinámicos (Excel y PDF) y graficar datos en tiempo real de forma autónoma.
 \end{abstract}
+
+
+
+\newpage
+
+
 
 \tableofcontents
 \newpage
@@ -71,6 +77,10 @@ La plataforma está concebida bajo un modelo de \textit{Multitenancy} (múltiple
 }
 \end{center}
 
+
+\newpage
+
+
 \section{Metodología y Procesos}
 El desarrollo del proyecto siguió una metodología ágil iterativa:
 \begin{enumerate}
@@ -86,24 +96,28 @@ El siguiente flujo muestra cómo los datos en bruto son refinados y entregados t
 \vspace{0.5cm}
 \begin{center}
 \makebox[\textwidth][c]{
-\begin{tikzpicture}[node distance=1.5cm and 1.5cm]
+\begin{tikzpicture}[node distance=2cm and 2cm]
     % Nodos
     \node (raw) [io, text width=2cm] {Datos Crudos (Excel, CSV)};
     \node (pandas) [process, right=1.5cm of raw, text width=2.5cm] {Limpieza y Normalización (Pandas)};
-    \node (sqlite) [database, right=1.5cm of pandas, text width=2cm, text centered] {Almacenamiento (SQLite)};
+    \node (sqlite) [database, right=2cm of pandas, text width=2cm, text centered] {Almacenamiento (SQLite)};
     
-    \node (ui) [process, below=1.5cm of sqlite, text width=3cm] {Visualización Reactiva (Plotly)};
-    \node (agent) [startstop, below=1.5cm of pandas, text width=3cm] {Agente de IA (Análisis Ad-Hoc)};
+    \node (ui) [process, below=2cm of sqlite, text width=3cm] {Visualización Reactiva (Plotly)};
+    \node (agent) [startstop, below=2cm of pandas, text width=3cm] {Agente de IA (Análisis Ad-Hoc)};
 
     % Flechas
     \draw [arrow] (raw) -- (pandas);
     \draw [arrow] (pandas) -- node[anchor=south] {Transformación} (sqlite);
     \draw [arrow] (sqlite) -- node[anchor=west] {Carga Dashboard} (ui);
-    \draw [arrow] (sqlite) |- node[anchor=north east] {Lectura Contextual} (agent);
-    \draw [arrow, <->] (ui) -- node[anchor=north] {Interacción UI} (agent);
+    \draw [arrow] (sqlite) -- node[anchor=south east, sloped] {Lectura Contextual} (agent);
+    \draw [arrow, <->] (ui) -- node[anchor=south] {Interacción UI} (agent);
 \end{tikzpicture}
 }
 \end{center}
+
+
+\newpage
+
 
 \section{Tecnologías Utilizadas}
 \begin{itemize}
@@ -116,7 +130,7 @@ El siguiente flujo muestra cómo los datos en bruto son refinados y entregados t
     \item \textbf{Reporteo:} Openpyxl (para la exportación nativa a Excel).
 \end{itemize}
 
-\newpage
+%\newpage
 \section{Arquitectura del Sistema Multi-Agente}
 
 El siguiente diagrama ilustra el flujo de información y la arquitectura del Agente encargado del análisis de datos.
@@ -172,6 +186,10 @@ Durante la integración surgieron diversos retos técnicos. El más crítico fue
 
 Asimismo, se resolvió un conflicto nativo de renderizado (Duplicate Element Key) en la UI al implementar un sistema dinámico de IDs en bucle para los botones de descarga de archivos, permitiendo al agente generar múltiples reportes simultáneos en el historial de chat sin colapsar el entorno gráfico.
 
+
+\newpage
+
+
 \section{Conclusión}
 La fusión entre el Business Intelligence estático y los Large Language Models (LLMs) representa una evolución inminente en la analítica de datos. Este proyecto demuestra la viabilidad técnica y operativa de implementar una solución SaaS B2B donde el usuario no necesita conocer lenguajes de consulta de bases de datos para extraer valor instantáneo de sus ecosistemas de información.
 
@@ -184,3 +202,4 @@ Las futuras iteraciones de la plataforma apuntan a:
 \end{enumerate}
 
 \end{document}
+
