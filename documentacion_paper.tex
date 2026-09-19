@@ -24,7 +24,7 @@
 \tikzstyle{database} = [cylinder, shape border rotate=90, draw, minimum height=2cm, minimum width=2.5cm, fill=gray!20]
 
 \title{\textbf{Desarrollo e Implementación de un Portafolio SaaS B2B de Inteligencia de Negocios Aumentado por IA (Arquitectura Multi-Agente)}}
-\author{DataViz Studio / Proyecto PIRMCT}
+\author{Mtro. Luis Ramón Tercero Martínez González \\ DataViz Studio / Proyecto PIRMCT}
 \date{\today}
 
 \begin{document}
@@ -96,20 +96,20 @@ El siguiente flujo muestra cómo los datos en bruto son refinados y entregados t
 \vspace{0.5cm}
 \begin{center}
 \makebox[\textwidth][c]{
-\begin{tikzpicture}[node distance=2cm and 2cm]
+\begin{tikzpicture}[node distance=2.5cm and 3cm]
     % Nodos
     \node (raw) [io, text width=2cm] {Datos Crudos (Excel, CSV)};
     \node (pandas) [process, right=1.5cm of raw, text width=2.5cm] {Limpieza y Normalización (Pandas)};
-    \node (sqlite) [database, right=2cm of pandas, text width=2cm, text centered] {Almacenamiento (SQLite)};
+    \node (sqlite) [database, right=3cm of pandas, text width=2cm, text centered, inner sep=10pt] {Almacenamiento (SQLite)};
     
-    \node (ui) [process, below=2cm of sqlite, text width=3cm] {Visualización Reactiva (Plotly)};
-    \node (agent) [startstop, below=2cm of pandas, text width=3cm] {Agente de IA (Análisis Ad-Hoc)};
+    \node (ui) [process, below=2.5cm of sqlite, text width=3cm] {Visualización Reactiva (Plotly)};
+    \node (agent) [startstop, below=2.5cm of pandas, text width=3cm] {Agente de IA (Análisis Ad-Hoc)};
 
     % Flechas
     \draw [arrow] (raw) -- (pandas);
     \draw [arrow] (pandas) -- node[anchor=south] {Transformación} (sqlite);
     \draw [arrow] (sqlite) -- node[anchor=west] {Carga Dashboard} (ui);
-    \draw [arrow] (sqlite) -- node[anchor=south east, sloped] {Lectura Contextual} (agent);
+    \draw [arrow] (sqlite) -- node[anchor=north, sloped, pos=0.4] {Lectura Contextual} (agent);
     \draw [arrow, <->] (ui) -- node[anchor=south] {Interacción UI} (agent);
 \end{tikzpicture}
 }
