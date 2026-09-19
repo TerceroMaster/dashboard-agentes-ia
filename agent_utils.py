@@ -182,9 +182,10 @@ def render_agent_chat(df_filtered: pd.DataFrame, contexto: str, page_key: str, e
                     4. ¡SOPORTE PARA EXCEL/PDF!: Si piden Excel, crea el dataframe y guárdalo con `df_nuevo.to_excel('reporte_temp_{page_key}.xlsx', index=False)`. Respuesta final de texto debe incluir: [REPORTE_EXCEL_GENERADO]. Si piden PDF, guarda la tabla como imagen usando matplotlib (`plt.savefig('reporte_temp_{page_key}.pdf', bbox_inches='tight')`). Respuesta final de texto debe incluir: [REPORTE_PDF_GENERADO].
                     """
                     
-                    agent_executor = create_react_agent(llm, [tool], state_modifier=instrucciones)
+                    agent_executor = create_react_agent(llm, [tool])
                     
-                    messages = []
+                    from langchain_core.messages import SystemMessage
+                    messages = [SystemMessage(content=instrucciones)]
                     # Pass the last 3 pairs for context
                     for msg in st.session_state[chat_history_key][-7:]:
                         if msg["role"] == "user":
