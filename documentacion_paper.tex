@@ -39,7 +39,7 @@ El presente documento detalla el desarrollo, la metodología y los resultados de
 \newpage
 
 \section{Introducción}
-Los tableros de control (dashboards) tradicionales ofrecen visualizaciones estáticas predefinidas, lo cual limita la capacidad de los tomadores de decisiones para realizar exploraciones profundas \textit{ad-hoc} sin depender de un equipo de ingenieros de datos. Este proyecto busca cerrar esa brecha mediante la integración de un "Científico de Datos Autónomo" directamente en la interfaz de usuario. 
+Los tableros de control (dashboards) tradicionales ofrecen visualizaciones estáticas predefinidas, lo cual limita la capacidad de los tomadores de decisiones para realizar exploraciones profundas \textit{ad-hoc} sin depender de un equipo de ingenieros de datos. Este proyecto busca cerrar esa brecha mediante la integración de un ``Científico de Datos Autónomo'' directamente en la interfaz de usuario. 
 
 El objetivo principal es construir una plataforma SaaS B2B modular que aloje diferentes casos de uso corporativos, donde el principal valor agregado es un botón de chat flotante impulsado por un agente de Inteligencia Artificial capaz de escribir y ejecutar código Python en tiempo real sobre las bases de datos de la empresa.
 
@@ -70,30 +70,29 @@ El siguiente diagrama ilustra el flujo de información y la arquitectura del Age
 
 \vspace{1cm}
 \begin{center}
-\begin{tikzpicture}[node distance=2cm]
+\begin{tikzpicture}[node distance=2.5cm and 3cm]
     % Nodos
-    \node (user) [startstop] {Usuario (Natural Language)};
-    \node (ui) [process, below of=user] {Interfaz Streamlit (Chat)};
-    \node (langchain) [io, below of=ui] {LangChain Orquestador};
+    \node (user) [startstop] {Usuario (Lenguaje Natural)};
+    \node (ui) [process, below=1cm of user] {Interfaz Streamlit (Chat)};
+    \node (langchain) [io, below=1cm of ui] {LangChain Orquestador};
     
-    \node (llm) [process, right of=langchain, xshift=3cm] {OpenAI (GPT-4o-mini)};
-    \node (python) [process, below of=langchain] {Python REPL (Pandas Tool)};
+    \node (llm) [process, right=2.5cm of langchain] {OpenAI (GPT-4o-mini)};
+    \node (python) [process, below=1.5cm of langchain] {Python REPL (Pandas)};
     
-    \node (db) [database, left of=python, xshift=-2cm] {SQLite / DataFrame};
+    \node (db) [database, left=2cm of python] {SQLite / DataFrame};
     
-    \node (output) [process, below of=python] {Generación de Artefactos (Excel, PDF, PNG)};
-    \node (response) [startstop, below of=output] {Respuesta al Usuario};
+    \node (output) [process, below=1.5cm of python] {Generación de Archivos (Excel/PDF)};
+    \node (response) [startstop, below=1.5cm of output] {Respuesta al Usuario};
 
     % Flechas
     \draw [arrow] (user) -- (ui);
     \draw [arrow] (ui) -- (langchain);
-    \draw [arrow] (langchain) -- node[anchor=south] {Prompt + Schema} (llm);
-    \draw [arrow] (llm) -- node[anchor=north] {Código Python} (langchain);
+    \draw [arrow] (langchain) -- node[anchor=south] {Prompt} (llm);
+    \draw [arrow] (llm) |- node[anchor=west, pos=0.75] {Código Python} (python);
     \draw [arrow] (langchain) -- node[anchor=east] {Ejecuta Script} (python);
     \draw [arrow] (db) -- node[anchor=south] {Lectura/Escritura} (python);
-    \draw [arrow] (python) -- node[anchor=east] {Retorna Resultados} (langchain);
-    \draw [arrow] (python) -- node[anchor=west] {Guarda Archivo} (output);
-    \draw [arrow] (langchain) edge[bend right=40] node[anchor=east] {Texto Final} (response);
+    \draw [arrow] (python) -- node[anchor=east] {Resultados} (output);
+    \draw [arrow] (langchain) edge[bend right=50] node[anchor=east] {Texto Final} (response);
     \draw [arrow] (output) -- (response);
 \end{tikzpicture}
 \end{center}
