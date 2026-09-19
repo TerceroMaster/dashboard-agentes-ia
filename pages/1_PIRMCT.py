@@ -696,6 +696,8 @@ with st.popover("💬 Empezar Conversación", help="Habla con tus datos"):
                     7. FORMATO DE FECHAS: La columna `caducidad` es de tipo texto (Ej: 'SEP/24', 'sep/24 ', '---/--'). Tiene basura y mayúsculas/minúsculas mezcladas.
                        - Si buscas el año 2024, filtra por `.str.contains('24', na=False)`.
                        - Si te piden agrupar por mes, SIEMPRE extrae el mes de esta forma para evitar errores: `df_filtrado['mes'] = df_filtrado['caducidad'].astype(str).str.split('/').str[0].str.strip().str.upper()` y agrupa por esa nueva columna.
+                    8. CONVERSACIÓN NATURAL: Si el usuario te saluda (ej. "hola", "buenos dias") o te agradece (ej. "gracias", "excelente"), responde de manera amable y cortés SIN escribir código de pandas, SIN intentar analizar datos y SIN repetir gráficas o reportes anteriores.
+                    
                     
                     Historial reciente:
                     {history}
