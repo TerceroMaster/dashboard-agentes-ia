@@ -1,40 +1,50 @@
-# 📊 Dashboard Ejecutivo con Inteligencia Artificial (IA Agents)
+# 📊 AI-Augmented BI Dashboards Portfolio (SaaS Platform)
 
-Bienvenido al repositorio del **Dashboard Ejecutivo PIRMCT 2025**, una plataforma analítica de nueva generación que combina la visualización tradicional de Inteligencia de Negocios (BI) con el poder de los **Agentes de Inteligencia Artificial**.
+Bienvenido al repositorio central de **Dashboards Interactivos con Inteligencia Artificial**. Este proyecto no es un simple panel de métricas, sino un **Motor Multi-Empresa (B2B)** diseñado para ofrecer Inteligencia de Negocios de próxima generación a *N* cantidad de empresas e industrias.
 
-Este proyecto transforma una base de datos estática en un ecosistema vivo donde los usuarios pueden "platicar" con sus datos, pedir cálculos matemáticos complejos, generar reportes en Excel/PDF y crear gráficas al vuelo, todo mediante lenguaje natural.
-
----
-
-## ✨ Características Principales
-
-*   **📈 Visualizaciones Dinámicas:** Gráficos interactivos nativos para explorar volúmenes de recolección, instituciones aliadas y sectores impactados.
-*   **🤖 Asistente de Datos (IA Agent):** Un botón flotante de chat en la esquina inferior que actúa como un Científico de Datos dedicado.
-*   **🧠 Arquitectura Multi-Agente:** Impulsado por LangChain, el agente analiza tu pregunta, programa un script de extracción en Python en milisegundos, valida las matemáticas y te responde en lenguaje natural.
-*   **💾 Exportación de Reportes Bajo Demanda:** Pídele al agente "Expórtame un Excel con el top 5 de laboratorios" y generará un archivo `.xlsx` listo para descargar.
-*   **📊 Gráficas Generativas:** Pídele gráficas personalizadas que no están en el dashboard por defecto y la IA las dibujará y te dará un botón para descargarlas como imagen.
-*   **🗑️ Garbage Collection:** Sistema de auto-limpieza que elimina archivos temporales (Excel, PDF, PNG) del servidor inmediatamente después de la descarga para optimizar memoria.
+El objetivo de esta plataforma es **comercializar y escalar la integración de Agentes de IA en empresas**, permitiendo que cualquier organización (Farmacéutica, Retail, Logística, Energía, etc.) pueda "hablar" directamente con sus bases de datos sin necesidad de saber programar.
 
 ---
 
-## 🛠️ Tecnologías y Stack
+## 🏢 Arquitectura Multi-Empresa (Casos de Uso Incluidos)
 
-Este proyecto fue construido utilizando herramientas modernas de Data Science y Desarrollo Web:
+El proyecto está estructurado de manera modular para alojar dashboards independientes por cliente/industria. Algunos de los módulos activos en este portafolio son:
 
-*   **[Python 3](https://www.python.org/):** El lenguaje base del proyecto.
-*   **[Streamlit](https://streamlit.io/):** Framework web utilizado para renderizar la interfaz de usuario, los gráficos y el diseño responsivo sin necesidad de HTML/JS complejo.
-*   **[LangChain](https://www.langchain.com/):** Framework utilizado para orquestar el `create_pandas_dataframe_agent`, dotando al modelo de la capacidad de ejecutar código Python interno.
-*   **[OpenAI (GPT-4o-mini)](https://openai.com/):** El motor de procesamiento de lenguaje natural (LLM) que interpreta las peticiones del usuario y razona sobre los datos.
-*   **[Pandas](https://pandas.pydata.org/):** Librería core para el análisis, manipulación y filtrado de los DataFrames en memoria.
-*   **[SQLite](https://www.sqlite.org/):** Motor de base de datos relacional ligero (vía `dashboard_data.db` y `etl.py`).
-*   **[Matplotlib](https://matplotlib.org/):** Para el dibujado generativo de gráficas solicitadas a la IA.
-*   **[Openpyxl](https://openpyxl.readthedocs.io/):** Motor detrás de la generación y exportación dinámica de archivos Excel (`.xlsx`).
+*   💊 **PIRMCT (Sector Salud/Farmacéutico):** Análisis de recolección de medicamentos caducados (Implementación insignia actual del Agente de IA).
+*   ⛽ **Sinopec (Sector Energía/Petróleo):** Análisis de producción y métricas operativas.
+*   🛒 **Retail Global (E-Commerce):** Ventas, inventarios y logística comercial.
+*   ✈️ **Logística Aérea (Airlines):** Métricas de vuelos, rutas y eficiencias.
+*   🧠 **Análisis de Sentimiento:** Procesamiento de lenguaje natural sobre redes sociales (Ej. Twitter).
+
+---
+
+## ✨ Características del Producto (El Valor Agregado)
+
+Lo que diferencia a estos Dashboards de soluciones estáticas como Tableau o PowerBI tradicional es la capa de **Agentes de Inteligencia Artificial Autónomos**:
+
+*   **🤖 Científico de Datos Integrado:** Un botón de chat flotante impulsado por IA que responde preguntas matemáticas exactas sobre el negocio en tiempo real.
+*   **💾 Exportación de Reportes Dinámicos:** Los clientes pueden pedir verbalmente "Genérame un reporte de las ventas caídas en marzo" y la IA genera un archivo **Excel (.xlsx)** o **PDF** descargable al instante.
+*   **📊 Gráficas Generativas al Vuelo:** Generación de gráficos (Barras, Pastel, Dispersión) que no estaban programados originalmente en el dashboard, dibujados a petición del cliente por el Agente.
+*   **🗑️ Garbage Collection Automático:** Eficiencia a nivel servidor; todo documento físico temporal generado por la IA se auto-destruye tras ser entregado al cliente, minimizando costos de almacenamiento.
+
+---
+
+## 🛠️ Tecnologías y Stack (Bajo el Capó)
+
+Para lograr un sistema tan reactivo, escalable y modular, utilizamos el siguiente stack tecnológico de punta:
+
+*   **[Streamlit](https://streamlit.io/):** Framework web ultra rápido para crear interfaces corporativas sin latencia.
+*   **[LangChain](https://www.langchain.com/):** El "cerebro" orquestador. Usamos la arquitectura `create_pandas_dataframe_agent` para que el LLM pueda escribir y ejecutar scripts de Python internamente.
+*   **[OpenAI (GPT-4o-mini)](https://openai.com/):** Motor de lenguaje natural (LLM) altamente eficiente en costos para escalar a múltiples empresas.
+*   **[Pandas](https://pandas.pydata.org/):** Core engine para procesamiento de millones de filas de datos.
+*   **[SQLite](https://www.sqlite.org/):** Base de datos embebida, fácilmente reemplazable por PostgreSQL o Snowflake en producción.
+*   **[Matplotlib & Openpyxl]:** Motores de renderizado visual y creación de reportes empresariales.
 
 ---
 
 ## 🚀 Instalación y Ejecución Local
 
-Sigue estos pasos para correr el proyecto en tu propia máquina:
+Para levantar el motor de Dashboards en tu máquina o servidor local:
 
 1.  **Clona el repositorio:**
     ```bash
@@ -42,35 +52,24 @@ Sigue estos pasos para correr el proyecto en tu propia máquina:
     cd dashboard-agentes-ia
     ```
 
-2.  **Instala las dependencias:**
-    Asegúrate de tener instaladas las siguientes librerías en tu entorno de Python:
+2.  **Instala las dependencias necesarias:**
     ```bash
     pip install streamlit pandas sqlite3 langchain langchain-experimental langchain-openai openai matplotlib openpyxl
     ```
 
-3.  **Configura tu API Key de OpenAI:**
-    Crea una carpeta oculta llamada `.streamlit` en la raíz del proyecto y dentro un archivo `secrets.toml`:
+3.  **Configura la llave maestra de la API (OpenAI):**
+    Crea la carpeta oculta `.streamlit` y protege tu llave:
     ```bash
     mkdir .streamlit
-    # Dentro de .streamlit/secrets.toml escribe:
+    # Crea el archivo .streamlit/secrets.toml y agrega:
     # OPENAI_API_KEY = "sk-tu-api-key-aqui"
     ```
 
-4.  **Ejecuta el Dashboard:**
+4.  **Enciende el servidor:**
     ```bash
     python -m streamlit run app.py
     ```
 
 ---
 
-## 📁 Estructura del Proyecto
-
-*   `app.py`: Archivo principal (Landing Page).
-*   `pages/`: Directorio que contiene las sub-páginas del dashboard (ej. `1_PIRMCT.py` donde reside la lógica principal del Agente IA).
-*   `etl.py`: Script de Extracción, Transformación y Carga que prepara `dashboard_data.db`.
-*   `dashboard_data.db`: Base de datos SQLite pre-cargada.
-*   `.streamlit/`: Carpeta de configuración y secretos (ignorada en Git por seguridad).
-
----
-
-*Desarrollado con pasión para llevar la Inteligencia de Negocios al siguiente nivel.*
+*Diseñado para escalar. Construido para revolucionar la Inteligencia de Negocios.*
