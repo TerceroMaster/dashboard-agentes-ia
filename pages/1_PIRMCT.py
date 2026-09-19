@@ -600,7 +600,7 @@ with st.popover("💬 Empezar Conversación", help="Habla con tus datos"):
     chat_height = 700 if fullscreen else 350
     chat_container = st.container(height=chat_height)
     with chat_container:
-        for msg in st.session_state.ai_chat_history:
+        for i, msg in enumerate(st.session_state.ai_chat_history):
             with st.chat_message(msg["role"]):
                 content_display = msg["content"]
                 content_display = content_display.replace("[GRAFICA_GENERADA]", "📊 Aquí tienes tu gráfica:")
@@ -617,7 +617,7 @@ with st.popover("💬 Empezar Conversación", help="Habla con tus datos"):
                             data=file,
                             file_name="grafica_pirmct.png",
                             mime="image/png",
-                            key=f"dl_img_{msg['content'][:10]}"
+                            key=f"dl_img_{i}"
                         )
                         
                 # Botones en columnas para reportes
@@ -631,7 +631,7 @@ with st.popover("💬 Empezar Conversación", help="Habla con tus datos"):
                                 data=file,
                                 file_name="reporte_pirmct.xlsx",
                                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                key=f"dl_xls_{msg['content'][:10]}"
+                                key=f"dl_xls_{i}"
                             )
                 
                 # Botón de descarga para PDF
@@ -643,7 +643,7 @@ with st.popover("💬 Empezar Conversación", help="Habla con tus datos"):
                                 data=file,
                                 file_name="reporte_pirmct.pdf",
                                 mime="application/pdf",
-                                key=f"dl_pdf_{msg['content'][:10]}"
+                                key=f"dl_pdf_{i}"
                             )
                 
     # Formulario para input (usado en vez de chat_input porque no está permitido en popovers)
