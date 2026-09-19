@@ -29,15 +29,18 @@ Lo que diferencia a estos Dashboards de soluciones estáticas como Tableau o Pow
 
 ---
 
-## 🛠️ Tecnologías y Stack (Bajo el Capó)
+## 🛠️ Tecnologías y Stack (El Ecosistema LangChain)
 
-Para lograr un sistema tan reactivo, escalable y modular, utilizamos el siguiente stack tecnológico de punta:
+Para lograr un sistema tan reactivo, escalable y modular, utilizamos un ecosistema de IA de última generación. La ventaja competitiva radica en la integración de tres herramientas clave que trabajan en sinergia:
 
+1. **[LangChain](https://www.langchain.com/):** El framework de desarrollo. Actúa como el puente que conecta el modelo de lenguaje (LLM) con las bases de datos y herramientas de la empresa, gestionando los prompts y la lógica base.
+2. **[LangGraph](https://langchain-ai.github.io/langgraph/):** El motor de orquestación. Mientras LangChain ofrece las piezas, LangGraph construye el motor V8. Permite crear **flujos de trabajo multi-paso con memoria de estado** (State Management). Le da al Agente la capacidad de razonar, escribir código, verificar errores y tomar decisiones cíclicas (arquitectura ReAct) sin entrar en bucles infinitos.
+3. **[LangSmith](https://smith.langchain.com/):** La plataforma de observabilidad. Nos permite monitorear cada token gastado, depurar el razonamiento del agente paso a paso y asegurar el control de calidad en tiempo real (Log & Trace).
+
+**Otras tecnologías del stack:**
 *   **[Streamlit](https://streamlit.io/):** Framework web ultra rápido para crear interfaces corporativas sin latencia.
-*   **[LangChain](https://www.langchain.com/):** El "cerebro" orquestador. Usamos la arquitectura `create_pandas_dataframe_agent` para que el LLM pueda escribir y ejecutar scripts de Python internamente.
-*   **[OpenAI (GPT-4o-mini)](https://openai.com/):** Motor de lenguaje natural (LLM) altamente eficiente en costos para escalar a múltiples empresas.
-*   **[Pandas](https://pandas.pydata.org/):** Core engine para procesamiento de millones de filas de datos.
-*   **[SQLite](https://www.sqlite.org/):** Base de datos embebida, fácilmente reemplazable por PostgreSQL o Snowflake en producción.
+*   **[OpenAI (GPT-4o-mini)](https://openai.com/):** Motor de lenguaje natural (LLM) altamente eficiente en costos.
+*   **[Pandas] y [SQLite]:** Core engine para procesamiento de millones de filas de datos.
 *   **[Matplotlib & Openpyxl]:** Motores de renderizado visual y creación de reportes empresariales.
 
 ---

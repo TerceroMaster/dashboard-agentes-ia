@@ -144,7 +144,7 @@ with s_col1:
 with s_col2:
     st.markdown("#### 💻 Dashboards Interactivos\nDiseño de interfaces web intuitivas para consumo de datos en tiempo real.")
     st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown("#### 🤖 Agentes de Inteligencia Artificial\nCreación de Agentes de IA (texto, voz o multimodal) conectados directamente a tus datos corporativos, dándole vida, interactividad y usabilidad a tu información.")
+    st.markdown("#### 🤖 Agentes de Inteligencia Artificial (Tu Analista 24/7)\nTransforma semanas de análisis en segundos. Creamos Agentes de IA que 'hablan' directamente con tus bases de datos corporativas. Imagina pedirle verbalmente a tu sistema: *'Genérame un reporte de ventas perdidas'*, y recibir un PDF y una gráfica predictiva al instante. Automatiza la toma de decisiones, reduce costos operativos y dota a tu empresa de una ventaja competitiva inigualable.")
 
 st.markdown("---")
 st.markdown("### 🤖 Interactúa con tus Datos (Demo de Agente IA)")

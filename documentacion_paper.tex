@@ -11,6 +11,19 @@
 \usepackage{geometry}
 \geometry{left=2.5cm,right=2.5cm,top=3cm,bottom=3cm}
 
+% Paquetes para código fuente
+\usepackage{xcolor}
+\usepackage{listings}
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!60!black},
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!10}
+}
+
 % Paquetes para diagramas
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows, positioning, fit, backgrounds, calc}
@@ -124,10 +137,61 @@ El siguiente flujo muestra cómo los datos en bruto son refinados y entregados t
     \item \textbf{Backend / Lógica:} Python 3.
     \item \textbf{Frontend:} Streamlit (para la interfaz web responsiva).
     \item \textbf{Base de Datos:} SQLite (embebida en el archivo \texttt{dashboard\_data.db}).
-    \item \textbf{Inteligencia Artificial:} OpenAI API (Modelo \texttt{gpt-4o-mini}) y LangChain (Framework de orquestación de agentes).
+    \item \textbf{Inteligencia Artificial:} Ecosistema LangChain (LangChain, LangGraph y LangSmith) operando con la API de OpenAI (Modelo \texttt{gpt-4o-mini}).
     \item \textbf{Análisis de Datos:} Pandas y Numpy.
     \item \textbf{Visualización de Datos:} Plotly Express (para gráficas interactivas nativas) y Matplotlib (para gráficas generadas al vuelo por la IA).
     \item \textbf{Reporteo:} Openpyxl (para la exportación nativa a Excel).
+\end{itemize}
+
+\section{El Ecosistema de Inteligencia Artificial}
+Para dotar a la plataforma de verdadera autonomía, el sistema emplea una tríada tecnológica de última generación que conforma el Ecosistema LangChain. La combinación de estas tres herramientas permite no solo crear al agente, sino monitorearlo y dotarlo de razonamiento lógico continuo:
+
+\vspace{0.5cm}
+\begin{center}
+\makebox[\textwidth][c]{
+\begin{tikzpicture}[node distance=1cm and 1.5cm, align=center]
+    % LangChain
+    \node (langchain) [process, fill=blue!10, text width=4.5cm, minimum height=4cm] {
+        \textbf{LangChain} \\
+        (Framework de Desarrollo) \\
+        \vspace{0.2cm}
+        - Componentes Base \\
+        - Prompts y Modelos \\
+        - Integración de Herramientas
+    };
+    
+    % LangGraph
+    \node (langgraph) [process, fill=orange!10, text width=4.5cm, minimum height=4cm, right=1.5cm of langchain] {
+        \textbf{LangGraph} \\
+        (Orquestación) \\
+        \vspace{0.2cm}
+        - Manejo de Estado en Memoria \\
+        - Bifurcación Condicional \\
+        - Flujos de Trabajo Multi-Paso
+    };
+    
+    % LangSmith
+    \node (langsmith) [process, fill=green!10, text width=4.5cm, minimum height=4cm, right=1.5cm of langgraph] {
+        \textbf{LangSmith} \\
+        (Observabilidad) \\
+        \vspace{0.2cm}
+        - Monitoreo en Tiempo Real \\
+        - Traza de Tokens (Logs) \\
+        - Depuración y Evaluación
+    };
+
+    % Arrows
+    \draw [arrow] (langchain) -- node[above] {Orquestación} (langgraph);
+    \draw [arrow] (langgraph) -- node[above] {Telemetría} (langsmith);
+    \draw [arrow] (langchain) edge[bend left=20] node[above] {Telemetría Directa} (langsmith);
+\end{tikzpicture}
+}
+\end{center}
+
+\begin{itemize}
+    \item \textbf{LangChain} provee los bloques de construcción fundamentales para hablar con el modelo de lenguaje (LLM).
+    \item \textbf{LangGraph} toma esos bloques y los introduce en un motor de grafos cíclicos, dándole al agente la memoria y la lógica necesarias para crear un ciclo \textit{ReAct} (Razonar $\rightarrow$ Actuar $\rightarrow$ Repetir) sin quedarse atrapado en bucles infinitos.
+    \item \textbf{LangSmith} actúa como la caja negra del avión, registrando cada paso lógico del agente y el consumo de tokens para realizar auditorías de calidad de las respuestas.
 \end{itemize}
 
 %\newpage
@@ -173,6 +237,27 @@ El Agente opera bajo la metodología ReAct (Reasoning and Acting). Cuando el usu
     \item \textbf{Observación:} La herramienta ejecuta el código y le devuelve al LLM el \textit{output} de consola.
     \item \textbf{Respuesta Final:} El LLM interpreta la ejecución exitosa, confirma la creación del archivo e informa al usuario.
 \end{enumerate}
+
+El núcleo algorítmico que hace posible este ciclo de razonamiento se implementa a través de LangGraph de la siguiente forma:
+
+\begin{lstlisting}[language=Python, caption=Implementación de Arquitectura ReAct con LangGraph]
+from langgraph.prebuilt import create_react_agent
+from langchain_openai import ChatOpenAI
+from langchain_experimental.tools import PythonAstREPLTool
+
+# 1. Herramienta (Acción: Acceso a la base de datos)
+tool = PythonAstREPLTool(locals={"df": df_filtered})
+
+# 2. Cerebro (Pensamiento: Modelo Lógico)
+llm = ChatOpenAI(temperature=0, model="gpt-4o-mini", api_key=api_key)
+
+# 3. Orquestador (Memoria y Ciclo Multi-paso de LangGraph)
+agent_executor = create_react_agent(llm, [tool])
+
+# 4. Invocación Autónoma
+response = agent_executor.invoke({"messages": messages})
+ai_reply = response["messages"][-1].content
+\end{lstlisting}
 
 \section{Resultados}
 \begin{itemize}

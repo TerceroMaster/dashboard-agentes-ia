@@ -179,7 +179,8 @@ def render_agent_chat(df_filtered: pd.DataFrame, contexto: str, page_key: str, e
                     1. Analiza el dataframe `df` usando tu herramienta de python para responder la pregunta con EXACTITUD matemática.
                     2. Responde SIEMPRE 100% en Español.
                     3. ¡SOPORTE PARA GRÁFICAS!: Si piden gráfica, genera el código usando `matplotlib.pyplot` como `plt`. Usa SIEMPRE `plt.xticks(rotation=45, ha='right')` y `plt.tight_layout()`. Guarda la figura con `plt.savefig('temp_chart_{page_key}.png')`. Respuesta final de texto debe incluir: [GRAFICA_GENERADA].
-                    4. ¡SOPORTE PARA EXCEL/PDF!: Si piden Excel, crea el dataframe y guárdalo con `df_nuevo.to_excel('reporte_temp_{page_key}.xlsx', index=False)`. Respuesta final de texto debe incluir: [REPORTE_EXCEL_GENERADO]. Si piden PDF, guarda la tabla como imagen usando matplotlib (`plt.savefig('reporte_temp_{page_key}.pdf', bbox_inches='tight')`). Respuesta final de texto debe incluir: [REPORTE_PDF_GENERADO].
+                    4. ¡SOPORTE PARA EXCEL/PDF!: Si piden Excel, crea el dataframe y guárdalo con `df_nuevo.to_excel('reporte_temp_{page_key}.xlsx', index=False)`. Respuesta final de texto debe incluir: [REPORTE_EXCEL_GENERADO].
+                    Si piden PDF, primero acorta los textos largos en el DataFrame a 35 caracteres (ej: `df_pdf = df_nuevo.astype(str).map(lambda x: x[:35]+'...' if len(x)>35 else x)`). Luego ajusta el tamaño dinámicamente con `plt.figure(figsize=(max(12, len(df_pdf.columns)*3), max(6, len(df_pdf)*0.6)))`. Oculta ejes con `plt.axis('off')` y dibuja con `plt.table(cellText=df_pdf.values, colLabels=df_pdf.columns, loc='center')`. Guarda con `plt.savefig('reporte_temp_{page_key}.pdf', bbox_inches='tight')`. Respuesta final de texto debe incluir: [REPORTE_PDF_GENERADO].
                     """
                     
                     agent_executor = create_react_agent(llm, [tool])
