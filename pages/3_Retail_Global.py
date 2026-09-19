@@ -96,4 +96,28 @@ with col_ch2:
 import agent_utils
 
 contexto_retail = "Dashboard Retail Global: E-commerce masivo. Análisis de rentabilidad, ganancias (profit), ventas (sales) y distribución geográfica."
-agent_utils.render_agent_chat(df_filt, contexto_retail, "retail")
+ejemplos_retail = """
+**🔍 Consultas Básicas**
+1. "¿Cuántos países distintos tienen ventas registradas?"
+2. "Dime los nombres de las 3 sub-categorías principales."
+3. "¿Cuál es el mercado (market) con mayor presencia?"
+4. "¿Existen ventas con ganancias (profit) negativas?"
+
+**🧮 Matemáticas y Agrupaciones**
+5. "¿Cuál es la suma total de las ventas (sales)?"
+6. "Calcula la ganancia total (profit) de la categoría 'Technology'."
+7. "Dime el promedio de ganancia por cada venta."
+8. "Agrupa por mercado y dime cuál tiene las ventas más altas."
+9. "¿Cuál es el país con el peor margen de ganancia?"
+
+**📈 Gráficas y Análisis Complejo**
+10. "Genera una gráfica de barras con las 5 sub-categorías más rentables."
+11. "Haz un gráfico de pastel mostrando las ventas por categoría."
+12. "Genera un diagrama de dispersión (scatter) de Ventas vs Ganancias."
+
+**💾 Exportación de Reportes**
+13. "Exporta a Excel las ventas donde hubo pérdida (profit menor a cero)."
+14. "Genera un reporte PDF con el top 10 de países con más ventas."
+15. "Exporta a Excel un resumen de ventas totales agrupadas por mercado."
+"""
+agent_utils.render_agent_chat(df_filt, contexto_retail, "retail", ejemplos_retail)

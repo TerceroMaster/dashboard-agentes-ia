@@ -7,7 +7,7 @@ from langgraph.prebuilt import create_react_agent
 from langchain_experimental.tools import PythonAstREPLTool
 import matplotlib.pyplot as plt
 
-def render_agent_chat(df_filtered: pd.DataFrame, contexto: str, page_key: str):
+def render_agent_chat(df_filtered: pd.DataFrame, contexto: str, page_key: str, ejemplos: str = ""):
     # CSS para forzar que el popover se posicione flotando en la esquina inferior derecha y sea responsivo
     st.markdown("""
     <style>
@@ -126,6 +126,10 @@ def render_agent_chat(df_filtered: pd.DataFrame, contexto: str, page_key: str):
                 </style>
                 """, unsafe_allow_html=True)
         
+        if ejemplos:
+            with st.expander("💡 Ejemplos de lo que puedes preguntarme"):
+                st.markdown(ejemplos)
+                
         chat_height = 600 if fullscreen else 350
         chat_container = st.container(height=chat_height)
         with chat_container:

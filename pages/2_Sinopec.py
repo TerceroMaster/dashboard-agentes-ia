@@ -222,4 +222,28 @@ with st.expander("Ver Lista Completa de Puntos de Acción"):
 import agent_utils
 
 contexto_sinopec = "Dashboard Sinopec: Gestión HSE, Auditoría y Control de Puntos de Acción de Seguridad. Analiza responsables, categorías de riesgo y estados abiertos/cerrados."
-agent_utils.render_agent_chat(df_filtered, contexto_sinopec, "sinopec")
+ejemplos_sinopec = """
+**🔍 Consultas Básicas**
+1. "¿Cuántos puntos de acción hay en total?"
+2. "¿Cuáles son los departamentos involucrados?"
+3. "Dime los nombres de todos los responsables que tienen tareas asignadas."
+4. "¿Cuáles son las fuentes de donde provienen más reportes?"
+
+**🧮 Matemáticas y Agrupaciones**
+5. "¿Cuántos puntos de acción están en estado 'Abierto' y cuántos en 'Cerrado'?"
+6. "Cuenta cuántos puntos de acción tiene asignados cada responsable."
+7. "¿Cuál es el departamento con más puntos de acción registrados?"
+8. "Dime qué porcentaje de las tareas ya están en estado Cerrado."
+9. "Agrupa los puntos por categoría de riesgo y dime cuántos hay de cada una."
+
+**📈 Gráficas y Análisis Complejo**
+10. "Genera una gráfica de barras con el top 5 de responsables con más puntos."
+11. "Genera un gráfico de pastel mostrando la proporción de puntos Abiertos vs Cerrados."
+12. "Genera una gráfica mostrando los departamentos con más incidencias."
+
+**💾 Exportación de Reportes**
+13. "Exporta a PDF la tabla de los 10 puntos de acción más recientes."
+14. "Exporta a Excel todos los puntos que estén en estado 'Abierto'."
+15. "Hazme un reporte en Excel de las tareas agrupadas por responsable."
+"""
+agent_utils.render_agent_chat(df_filtered, contexto_sinopec, "sinopec", ejemplos_sinopec)

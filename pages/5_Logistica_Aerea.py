@@ -109,4 +109,28 @@ with col_b2:
 import agent_utils
 
 contexto_logistica = "Dashboard Logística Aérea: Tráfico intercontinental, vuelos comerciales, aerolíneas, rutas y estado (A Tiempo, Demorado, Cancelado)."
-agent_utils.render_agent_chat(df, contexto_logistica, "logistica")
+ejemplos_logistica = """
+**🔍 Consultas Básicas**
+1. "¿Cuántos vuelos en total hay registrados?"
+2. "Dime las 3 aerolíneas (airline_name) más frecuentes."
+3. "¿Cuáles son las ciudades de origen (origin_city) más comunes?"
+4. "¿Cuáles son los destinos (dest_city) principales?"
+
+**🧮 Matemáticas y Agrupaciones**
+5. "¿Cuántos pasajeros (passengers) hay en total en todos los vuelos?"
+6. "Suma los pasajeros de la aerolínea con más vuelos."
+7. "¿Cuántos vuelos están 'A Tiempo', cuántos 'Demorados' y cuántos 'Cancelados'?"
+8. "Agrupa por aerolínea y dime cuántos vuelos cancelados tiene cada una."
+9. "¿Cuál es el promedio de pasajeros por vuelo?"
+
+**📈 Gráficas y Análisis Complejo**
+10. "Genera una gráfica de barras con el top 5 de ciudades destino."
+11. "Haz un gráfico de pastel con el estado de los vuelos (status)."
+12. "Genera una gráfica del top 5 de aerolíneas por total de pasajeros."
+
+**💾 Exportación de Reportes**
+13. "Exporta a Excel todos los vuelos que tengan estado 'Demorado'."
+14. "Exporta a PDF el resumen de total de pasajeros por cada aerolínea."
+15. "Hazme un reporte en Excel de las conexiones donde el origen sea Nueva York."
+"""
+agent_utils.render_agent_chat(df, contexto_logistica, "logistica", ejemplos_logistica)

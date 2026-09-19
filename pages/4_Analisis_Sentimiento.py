@@ -89,4 +89,28 @@ st.dataframe(df[['date', 'user', 'sentiment', 'text']].head(50), use_container_w
 import agent_utils
 
 contexto_nlp = "Dashboard Análisis de Sentimiento (NLP): Clasificación de interacciones de Twitter en Positivo y Negativo."
-agent_utils.render_agent_chat(df, contexto_nlp, "sentimiento")
+ejemplos_nlp = """
+**🔍 Consultas Básicas**
+1. "¿Cuántos tweets o interacciones hay en la base de datos?"
+2. "¿Cuáles son los usuarios (user) que más comentaron?"
+3. "Dime los sentimientos posibles que existen en la base de datos."
+4. "Muestra el texto de 3 tweets elegidos al azar."
+
+**🧮 Matemáticas y Agrupaciones**
+5. "¿Cuántos tweets tienen sentimiento 'Positivo'?"
+6. "¿Cuál es el porcentaje de interacciones 'Negativas'?"
+7. "Agrupa por usuario y dime quién tiene más interacciones."
+8. "¿Qué usuario tiene más comentarios positivos?"
+9. "Cuenta la longitud promedio de caracteres de los tweets negativos."
+
+**📈 Gráficas y Análisis Complejo**
+10. "Genera una gráfica de barras mostrando la cantidad de tweets por sentimiento."
+11. "Crea un gráfico de pastel con la proporción de positivo vs negativo."
+12. "Genera una gráfica de los 5 usuarios más activos."
+
+**💾 Exportación de Reportes**
+13. "Exporta a Excel todos los textos que hayan sido marcados como 'Negativo'."
+14. "Genera un reporte PDF con la tabla de conteo de sentimientos."
+15. "Exporta a Excel los 100 tweets más recientes (date) que sean positivos."
+"""
+agent_utils.render_agent_chat(df, contexto_nlp, "sentimiento", ejemplos_nlp)

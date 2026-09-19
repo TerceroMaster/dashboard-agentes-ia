@@ -442,7 +442,31 @@ with tab3:
 import agent_utils
 
 contexto_pirmct = "Dashboard PIRMCT: Programa de Recolección de Medicamentos Caducados. Datos de recolecciones, sectores, instituciones, y grupos terapéuticos."
-agent_utils.render_agent_chat(df_filtered, contexto_pirmct, "pirmct")
+ejemplos_pirmct = """
+**🔍 Consultas Básicas**
+1. "¿De qué país de origen vienen más medicamentos?"
+2. "Dime cuáles son los laboratorios que más medicamentos aportaron."
+3. "¿Cuántos medicamentos distintos (fórmulas) hay en el sector Público?"
+4. "¿Cuáles son las 3 instituciones con más registros?"
+
+**🧮 Matemáticas y Agrupaciones**
+5. "Suma la cantidad de medicamentos cuya vía de administración sea Oral y dime cuántos son."
+6. "¿Tenemos medicamentos caducados del año 2023? ¿Cuántos?"
+7. "¿Cuál es el registro sanitario con mayor volumen de recolección?"
+8. "Calcula el promedio de cantidad recolectada por cada tipo de envase."
+9. "Agrupa por sector y dime cuál tiene la mayor suma de cantidad_remanente."
+
+**📈 Gráficas y Análisis Complejo**
+10. "Dime el top 3 de tipos de forma farmacéutica más comunes."
+11. "Genera una gráfica de barras mostrando el top 5 de laboratorios productores."
+12. "Genera un gráfico de pastel con los 4 sectores que más aportaron."
+
+**💾 Exportación de Reportes**
+13. "Exporta un reporte en PDF del top 10 de laboratorios."
+14. "Exporta a Excel todos los medicamentos caducados en 2024, agrupados por mes."
+15. "Hazme un reporte en Excel de las 5 instituciones que más aportaron."
+"""
+agent_utils.render_agent_chat(df_filtered, contexto_pirmct, "pirmct", ejemplos_pirmct)
 
 # Data Table at the very bottom
 st.markdown("---")
