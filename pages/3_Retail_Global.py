@@ -89,3 +89,11 @@ with col_ch2:
                      color='profit', color_continuous_scale=[ROJO_LOSS, VERDE_PROFIT])
     fig_bar.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color='white', coloraxis_showscale=False)
     st.plotly_chart(fig_bar, use_container_width=True)
+
+# ==============================================================================
+# 🤖 BOTÓN FLOTANTE: AGENTE IA CON OPENAI (LangGraph)
+# ==============================================================================
+import agent_utils
+
+contexto_retail = "Dashboard Retail Global: E-commerce masivo. Análisis de rentabilidad, ganancias (profit), ventas (sales) y distribución geográfica."
+agent_utils.render_agent_chat(df_filt, contexto_retail, "retail")

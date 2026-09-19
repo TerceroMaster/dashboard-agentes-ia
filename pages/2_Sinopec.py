@@ -215,3 +215,11 @@ with st.expander("Ver Lista Completa de Puntos de Acción"):
     cols_to_show = ['no', 'fuente', 'departamento', 'fecha_de_reporte', 'situacion_observada/reportada', 'accion_correctiva_tomada_o_sugerida', 'responsable', 'Estado']
     display_df = df_filtered[[c for c in cols_to_show if c in df_filtered.columns]]
     st.dataframe(display_df, use_container_width=True)
+
+# ==============================================================================
+# 🤖 BOTÓN FLOTANTE: AGENTE IA CON OPENAI (LangGraph)
+# ==============================================================================
+import agent_utils
+
+contexto_sinopec = "Dashboard Sinopec: Gestión HSE, Auditoría y Control de Puntos de Acción de Seguridad. Analiza responsables, categorías de riesgo y estados abiertos/cerrados."
+agent_utils.render_agent_chat(df_filtered, contexto_sinopec, "sinopec")

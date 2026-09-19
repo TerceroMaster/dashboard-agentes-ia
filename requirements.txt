@@ -11,3 +11,4 @@ langchain-openai
 openai
 openpyxl
 tabulate
+langgraph

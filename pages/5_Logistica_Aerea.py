@@ -102,3 +102,11 @@ with col_b2:
     fig_pie = px.pie(df, names='status', color_discrete_map={'A Tiempo': '#00B8D9', 'Demorado': '#FFAB00', 'Cancelado': '#FF5630'}, hole=0.5)
     fig_pie.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color='white')
     st.plotly_chart(fig_pie, use_container_width=True)
+
+# ==============================================================================
+# 🤖 BOTÓN FLOTANTE: AGENTE IA CON OPENAI (LangGraph)
+# ==============================================================================
+import agent_utils
+
+contexto_logistica = "Dashboard Logística Aérea: Tráfico intercontinental, vuelos comerciales, aerolíneas, rutas y estado (A Tiempo, Demorado, Cancelado)."
+agent_utils.render_agent_chat(df, contexto_logistica, "logistica")

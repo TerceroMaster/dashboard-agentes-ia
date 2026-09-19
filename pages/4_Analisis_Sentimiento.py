@@ -82,3 +82,11 @@ with col2:
 st.markdown("---")
 st.markdown("### 💬 Muestra de Tweets Recientes")
 st.dataframe(df[['date', 'user', 'sentiment', 'text']].head(50), use_container_width=True)
+
+# ==============================================================================
+# 🤖 BOTÓN FLOTANTE: AGENTE IA CON OPENAI (LangGraph)
+# ==============================================================================
+import agent_utils
+
+contexto_nlp = "Dashboard Análisis de Sentimiento (NLP): Clasificación de interacciones de Twitter en Positivo y Negativo."
+agent_utils.render_agent_chat(df, contexto_nlp, "sentimiento")
