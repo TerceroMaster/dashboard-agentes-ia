@@ -68,33 +68,34 @@ El desarrollo del proyecto siguió una metodología ágil iterativa:
 
 El siguiente diagrama ilustra el flujo de información y la arquitectura del Agente encargado del análisis de datos.
 
-\vspace{1cm}
+\vspace{0.5cm}
 \begin{center}
-\begin{tikzpicture}[node distance=2.5cm and 3cm]
+\makebox[\textwidth][c]{
+\begin{tikzpicture}[node distance=1.5cm and 1.5cm]
     % Nodos
     \node (user) [startstop] {Usuario (Lenguaje Natural)};
-    \node (ui) [process, below=1cm of user] {Interfaz Streamlit (Chat)};
-    \node (langchain) [io, below=1cm of ui] {LangChain Orquestador};
+    \node (ui) [process, below=0.8cm of user] {Interfaz Streamlit};
+    \node (langchain) [io, below=0.8cm of ui] {LangChain Orquestador};
     
-    \node (llm) [process, right=2.5cm of langchain] {OpenAI (GPT-4o-mini)};
     \node (python) [process, below=1.5cm of langchain] {Python REPL (Pandas)};
+    \node (llm) [process, right=0.8cm of python, text width=2.5cm, text centered] {OpenAI (GPT-4o-mini)};
+    \node (db) [database, left=1cm of python, text width=2cm, text centered] {SQLite / DataFrame};
     
-    \node (db) [database, left=2cm of python] {SQLite / DataFrame};
-    
-    \node (output) [process, below=1.5cm of python] {Generación de Archivos (Excel/PDF)};
-    \node (response) [startstop, below=1.5cm of output] {Respuesta al Usuario};
+    \node (output) [process, below=1.5cm of python] {Generación Archivos (Excel/PDF)};
+    \node (response) [startstop, below=1cm of output] {Respuesta al Usuario};
 
     % Flechas
     \draw [arrow] (user) -- (ui);
     \draw [arrow] (ui) -- (langchain);
-    \draw [arrow] (langchain) -- node[anchor=south] {Prompt} (llm);
-    \draw [arrow] (llm) |- node[anchor=west, pos=0.75] {Código Python} (python);
-    \draw [arrow] (langchain) -- node[anchor=east] {Ejecuta Script} (python);
-    \draw [arrow] (db) -- node[anchor=south] {Lectura/Escritura} (python);
+    \draw [arrow] (langchain) -| node[anchor=south west, pos=0.8] {Prompt} (llm);
+    \draw [arrow] (llm) -- node[anchor=south] {Código} (python);
+    \draw [arrow] (langchain) -- node[anchor=east] {Ejecuta} (python);
+    \draw [arrow] (db) -- node[anchor=south] {Lectura/Esc.} (python);
     \draw [arrow] (python) -- node[anchor=east] {Resultados} (output);
-    \draw [arrow] (langchain) edge[bend right=50] node[anchor=east] {Texto Final} (response);
+    \draw [arrow] (langchain) edge[bend right=60] node[anchor=east] {Texto Final} (response);
     \draw [arrow] (output) -- (response);
 \end{tikzpicture}
+}
 \end{center}
 
 \subsection{El Flujo del Agente (Pensamiento -> Acción -> Observación)}
